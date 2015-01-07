@@ -53,3 +53,7 @@ docs/_build/
 
 # PyBuilder
 target/
+pylast_cache
+api_secrets.yaml
+spotify_appkey.key
+tmp

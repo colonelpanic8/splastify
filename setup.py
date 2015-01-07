@@ -8,7 +8,7 @@ setup(
     name="splastify",
     version=version,
     packages=find_packages(exclude=('tests*', 'examples')),
-    install_requires=['pylast', 'pyyaml'],
+    install_requires=['pylast', 'pyyaml', 'pyspotify == 2.0.0b3', 'coloredlogs'],
     tests_require=['tox', 'pytest', 'mock', 'vcrpy >= 1.1.4'],
     package_data={'': ['*.md', '*.rst']},
     author="Ivan Malison",
