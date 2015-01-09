@@ -57,3 +57,4 @@ pylast_cache
 api_secrets.yaml
 spotify_appkey.key
 tmp
+interactive.py

@@ -1,8 +1,34 @@
 from functools import reduce
+import itertools
 import numbers
 import operator
 
+import pylast
+import yaml
+
 from . import util
+
+
+def network_from_filepath(filename, cache_filepath=None):
+    with open(filename, "r") as yaml_file:
+        network_arguments = yaml.load(yaml_file)
+    assert 'api_key' in network_arguments
+    assert 'api_secret' in network_arguments
+    network = pylast.LastFMNetwork(**network_arguments)
+    if cache_filepath is not None:
+        if cache_filepath is True:
+            cache_filepath = os.path.join(os.path.dirname(__file__), "pylast_cache")
+        network.enable_caching(file_path=cache_filepath)
+    return network
+
+
+def pylast_tracks_to_play_links(lastfm_tracks, network=None):
+    if network is None:
+        network = lastfm_tracks[0].network
+    return (l for l in itertools.chain(
+        *(network.get_track_play_links(track_group)
+          for track_group in util.segment(lastfm_tracks, 20))
+    ) if l is not None)
 
 
 class TrackWrapper(object):

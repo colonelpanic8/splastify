@@ -12,6 +12,21 @@ def enable_logger(log_name, level=logging.DEBUG):
     log.addHandler(handler)
 
 
+def segment(iterable, segment_length):
+    iterable = iter(iterable)
+    if segment_length is None:
+        yield iterable
+        raise StopIteration
+    def yield_length():
+        for _ in xrange(segment_length):
+            yield iterable.next()
+    while True:
+        segment = list(yield_length())
+        if not segment:
+            raise StopIteration
+        yield segment
+
+
 class cached_property(object):
     """Descriptor that caches the result of the first call to resolve its
     contents.
